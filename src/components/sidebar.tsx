@@ -3,18 +3,29 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
-import { 
-  LayoutDashboard, 
-  DollarSign, 
-  FileText, 
-  User, 
+import {
+  LayoutDashboard,
+  DollarSign,
+  FileText,
+  User,
   LogOut,
-  Settings
+  TrendingUp,
+  Users,
+  AlertTriangle,
+  Wallet,
+  Network,
+  GraduationCap,
 } from "lucide-react"
 
 const sidebarItems = [
   { title: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
-  { title: "My Commissions", href: "/dashboard/commissions", icon: DollarSign },
+  { title: "Performance", href: "/dashboard/performance", icon: TrendingUp },
+  { title: "My Customers", href: "/dashboard/customers", icon: Users },
+  { title: "Complaints", href: "/dashboard/complaints", icon: AlertTriangle },
+  { title: "Payouts", href: "/dashboard/payouts", icon: Wallet },
+  { title: "Commissions", href: "/dashboard/commissions", icon: DollarSign },
+  { title: "My Network", href: "/dashboard/network", icon: Network },
+  { title: "Training", href: "/dashboard/training", icon: GraduationCap },
   { title: "Documents", href: "/dashboard/documents", icon: FileText },
   { title: "My Profile", href: "/dashboard/profile", icon: User },
 ]
