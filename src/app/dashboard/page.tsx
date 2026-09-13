@@ -1,7 +1,7 @@
 "use client"
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { DollarSign, Users, Briefcase, TrendingUp, ArrowUpRight, ArrowDownRight, CreditCard, Activity } from "lucide-react"
+import { DollarSign, Users, Briefcase, TrendingUp, ArrowUpRight, CreditCard, Activity } from "lucide-react"
 
 // Mock Data
 const CURRENT_AGENT = {
@@ -25,7 +25,7 @@ export default function DashboardPage() {
       <div className="flex items-center justify-between space-y-2">
         <div>
           <h2 className="text-3xl font-bold tracking-tight">Dashboard</h2>
-          <p className="text-muted-foreground">Welcome back, {CURRENT_AGENT.name}. Here's your business at a glance.</p>
+          <p className="text-muted-foreground">Welcome back, {CURRENT_AGENT.name}. Here&apos;s your business at a glance.</p>
         </div>
       </div>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">

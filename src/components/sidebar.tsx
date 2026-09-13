@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import Image from "next/image"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 import {
@@ -43,7 +44,7 @@ export function Sidebar() {
       <div className="flex h-14 items-center border-b px-4 lg:h-[60px]">
         <Link href="/dashboard" className="flex items-center gap-2 font-semibold">
           {config.logoUrl ? (
-             <img src={config.logoUrl} alt="Logo" className="h-6 w-6 rounded-md object-cover" />
+             <Image src={config.logoUrl} alt="Logo" width={24} height={24} unoptimized className="h-6 w-6 rounded-md object-cover" />
           ) : (
             <div className="h-6 w-6 rounded-md flex items-center justify-center" style={{ backgroundColor: config.primaryColor }}>
                 <span className="text-white text-xs font-bold">{config.organizationName.substring(0, 1) || 'Z'}</span>

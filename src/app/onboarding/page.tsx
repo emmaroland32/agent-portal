@@ -167,7 +167,7 @@ export default function OnboardingPage() {
                    <CardContent className="space-y-4">
                        <div className="h-48 bg-slate-50 rounded-md p-4 text-xs text-slate-600 overflow-y-auto border">
                            <p className="font-bold mb-2">INDEPENDENT CONTRACTOR AGREEMENT</p>
-                           <p>This Agreement is made between ZGATE ("Company") and the undersigned Agent ("Contractor")...</p>
+                           <p>This Agreement is made between ZGATE (&quot;Company&quot;) and the undersigned Agent (&quot;Contractor&quot;)...</p>
                            <br />
                            <p>1. RELATIONSHIP. Contractor serves as an independent agent and not an employee...</p>
                            <p>2. COMPENSATION. Contractor shall be paid commissions according to the current schedule...</p>

@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import Image from "next/image"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
@@ -85,7 +86,7 @@ export default function LoginPage() {
            <div className="flex justify-center mb-8">
                <div className="flex items-center gap-2">
                    {config.logoUrl ? (
-                       <img src={config.logoUrl} alt="Logo" className="h-10 w-10 rounded-md object-cover" />
+                       <Image src={config.logoUrl} alt="Logo" width={40} height={40} unoptimized className="h-10 w-10 rounded-md object-cover" />
                    ) : (
                        <div className="h-10 w-10 rounded-md flex items-center justify-center text-white font-bold text-xl" style={{ backgroundColor: config.primaryColor }}>
                            {config.organizationName.substring(0, 1) || 'Z'}

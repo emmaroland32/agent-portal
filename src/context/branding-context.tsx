@@ -26,6 +26,14 @@ const BrandingContext = createContext<BrandingContextType>({
   loading: true
 })
 
+function updateTheme(colorHex: string) {
+  // Only update if hex is valid
+  if (!/^#[0-9A-F]{6}$/i.test(colorHex)) return
+
+  // Simple approach: Set a global CSS variable and use it in a style tag for specific overrides
+  document.documentElement.style.setProperty('--primary-brand', colorHex)
+}
+
 export function BrandingProvider({ children }: { children: React.ReactNode }) {
   const [config, setConfig] = useState<BrandingConfig>(defaultBranding)
   const [loading, setLoading] = useState(true)
@@ -53,14 +61,6 @@ export function BrandingProvider({ children }: { children: React.ReactNode }) {
     const interval = setInterval(fetchBranding, 5000)
     return () => clearInterval(interval)
   }, [])
-
-  const updateTheme = (colorHex: string) => {
-    // Only update if hex is valid
-    if (!/^#[0-9A-F]{6}$/i.test(colorHex)) return
-
-    // Simple approach: Set a global CSS variable and use it in a style tag for specific overrides
-    document.documentElement.style.setProperty('--primary-brand', colorHex)
-  }
 
   // Effect to update Favicon
   useEffect(() => {
