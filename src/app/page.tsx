@@ -3,7 +3,6 @@
 import Link from "next/link"
 import Image from "next/image"
 import { useState } from "react"
-import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
@@ -13,72 +12,29 @@ import { ShieldCheck } from "lucide-react"
 import { useBranding } from "@/context/branding-context"
 
 export default function LoginPage() {
-  const router = useRouter()
-  const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
-  const [maintenanceMode, setMaintenanceMode] = useState(false)
   const { config } = useBranding()
 
-  const handleLogin = async (e: React.FormEvent) => {
-    // ... same as before
+  /*
+   * There is nothing to sign in to yet.
+   *
+   * This posted to `http://localhost:3000/api/security/login` — a route on the staff dashboard, on a
+   * different origin, which forwarded to a backend endpoint (`/api/v1/auth/agent-login`) that does not
+   * exist and never did. Three separate reasons it could not work: CORS blocked the cross-origin POST,
+   * the dev host was hardcoded, and the backend has no agent identity at all — no such endpoint, no
+   * Agent entity. That route has since been removed, because it also handed a backend token straight
+   * to the browser.
+   *
+   * Saying so here rather than failing with "Unable to connect to authentication server", which
+   * implied there was a server to connect to. The dashboard behind this screen is reachable by URL
+   * anyway: this app has no middleware and no session check, and every page renders fixed demo data.
+   * See README.md for what has to exist before this form can mean anything.
+   */
+  const handleLogin = (e: React.FormEvent) => {
     e.preventDefault()
-    setLoading(true)
-    setError('')
-    
-    const email = (document.getElementById('email') as HTMLInputElement).value
-    const password = (document.getElementById('password') as HTMLInputElement).value
-
-    try {
-      const res = await fetch('http://localhost:3000/api/security/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password })
-      })
-
-      const data = await res.json()
-
-      if (res.status === 503) {
-        setMaintenanceMode(true)
-        setError(data.error)
-        return
-      }
-
-      if (!res.ok) {
-        setError(data.error || 'Login failed')
-        return
-      }
-
-      // Successful login
-      router.push("/dashboard")
-    } catch (err) {
-      console.error('Login error:', err)
-      setError('Unable to connect to authentication server.')
-    } finally {
-      setLoading(false)
-    }
+    setError('Agent sign-in is not implemented yet: this portal has no backend. See README.md.')
   }
 
-  if (maintenanceMode) {
-     // ... same as before
-     return (
-        <div className="flex h-screen w-full items-center justify-center bg-slate-50 dark:bg-slate-900 p-4">
-             <Card className="w-full max-w-md border-red-200 dark:border-red-900 shadow-xl">
-                <CardHeader className="text-center">
-                    <div className="mx-auto bg-red-100 p-3 rounded-full w-fit mb-4">
-                        <ShieldCheck className="h-8 w-8 text-red-600" />
-                    </div>
-                    <CardTitle className="text-xl text-red-700">Portal Under Maintenance</CardTitle>
-                    <CardDescription>
-                        {error || "The Agent Portal is currently offline for scheduled maintenance. Please try again later."}
-                    </CardDescription>
-                </CardHeader>
-                <CardFooter>
-                    <Button variant="outline" className="w-full" onClick={() => window.location.reload()}>Check Status</Button>
-                </CardFooter>
-             </Card>
-        </div>
-     )
-  }
 
   return (
     <div className="flex h-screen w-full items-center justify-center bg-slate-50 dark:bg-slate-900">
@@ -112,16 +68,16 @@ export default function LoginPage() {
                        )}
                        <div className="grid gap-2">
                            <Label htmlFor="email">Email</Label>
-                           <Input id="email" type="email" placeholder="agent@example.com" required disabled={loading} />
+                           <Input id="email" type="email" placeholder="agent@example.com" required />
                        </div>
                        <div className="grid gap-2">
                            <Label htmlFor="password">Password</Label>
-                           <Input id="password" type="password" required disabled={loading} />
+                           <Input id="password" type="password" required />
                        </div>
                    </CardContent>
                    <CardFooter className="flex flex-col gap-4">
-                       <Button className="w-full bg-emerald-600 hover:bg-emerald-700" type="submit" disabled={loading}>
-                           {loading ? 'Verifying...' : 'Sign In'}
+                       <Button className="w-full bg-emerald-600 hover:bg-emerald-700" type="submit">
+                           Sign In
                        </Button>
                        <p className="text-xs text-center text-muted-foreground">
                            <Link href="#" className="underline hover:text-primary">Forgot your password?</Link>

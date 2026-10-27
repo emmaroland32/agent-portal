@@ -1,6 +1,6 @@
 "use client"
 
-import React, { createContext, useContext, useEffect, useState } from 'react'
+import React, { createContext, useContext, useEffect } from 'react'
 
 interface BrandingConfig {
   organizationName: string
@@ -35,32 +35,24 @@ function updateTheme(colorHex: string) {
 }
 
 export function BrandingProvider({ children }: { children: React.ReactNode }) {
-  const [config, setConfig] = useState<BrandingConfig>(defaultBranding)
-  const [loading, setLoading] = useState(true)
+  // Static while there is nothing to fetch it from, so there is nothing to wait for either and
+  // `loading` is a constant. It stays on the context so consumers need not change when a backend
+  // does appear and this goes back to being state.
+  const config = defaultBranding
+  const loading = false
 
+  /*
+   * Branding was fetched from `http://localhost:3000/api/branding` — the staff dashboard, on a
+   * different origin — and re-fetched every five seconds. It never worked: that route sends no CORS
+   * headers, so the browser blocked every response and the catch branch ran each time, logging an
+   * error and falling back to these defaults twenty times a minute. The hardcoded dev host also meant
+   * it could never work anywhere else.
+   *
+   * Until this portal has a backend of its own (see README.md), the defaults ARE the branding.
+   */
   useEffect(() => {
-    // Poll for branding changes every 5 seconds or just fetch once
-    const fetchBranding = () => {
-        fetch('http://localhost:3000/api/branding')
-        .then(res => res.json())
-        .then(data => {
-            setConfig(data)
-            updateTheme(data.primaryColor)
-        })
-        .catch(err => {
-            console.error('Failed to fetch branding:', err)
-            // Fallback to default
-            updateTheme(defaultBranding.primaryColor)
-        })
-        .finally(() => setLoading(false))
-    }
-
-    fetchBranding()
-    
-    // Optional: polling for demo purposes
-    const interval = setInterval(fetchBranding, 5000)
-    return () => clearInterval(interval)
-  }, [])
+    updateTheme(config.primaryColor)
+  }, [config.primaryColor])
 
   // Effect to update Favicon
   useEffect(() => {
